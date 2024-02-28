@@ -4,8 +4,8 @@ Copyright © 2024 Pasinun.w
 package main
 
 import (
-	"github.com/wuhoops/silenda/cmd"
-	"github.com/wuhoops/silenda/loaders"
+	"github.com/wuhoops/silenda/cli/cmd"
+	"github.com/wuhoops/silenda/cli/loaders"
 )
 
 func main() {

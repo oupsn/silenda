@@ -5,7 +5,8 @@ import (
 	"strings"
 
 	"github.com/spf13/viper"
-	"github.com/wuhoops/silenda/utils")
+	"github.com/wuhoops/silenda/cli/utils"
+)
 
 func Configs() {
 	viper.SetConfigFile(utils.CONFIG_FILE_NAME)

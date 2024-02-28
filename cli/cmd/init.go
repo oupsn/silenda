@@ -6,28 +6,28 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/wuhoops/silenda/cli/models"
+	"github.com/wuhoops/silenda/cli/utils"
 	"os"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
-	"github.com/wuhoops/silenda/models"
-	"github.com/wuhoops/silenda/utils"
 )
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Used to initialize the workspace key",
-	Long:  `This command is used to initialize the workspace key.`,
+	Short: "Used to initialize the workspace id",
+	Long:  `This command is used to initialize the workspace id.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		wk, err := cmd.Flags().GetString("workspace-key")
+		wk, err := cmd.Flags().GetString("workspace-id")
 		if err != nil {
 			fmt.Println("Error: ", err)
 			return
 		}
 		_, err = os.ReadFile(utils.CONFIG_FILE_NAME)
 		if err == nil {
-			fmt.Println("Workspace key already exists")
+			fmt.Println("Workspace id already exists")
 			prompt := promptui.Select{
 				Label: "Do you want to overwrite it?",
 				Items: []string{"Yes", "No"},
@@ -58,12 +58,12 @@ var initCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-	initCmd.Flags().StringP("workspace-key", "w", "", "Set the workspace key for the project")
+	initCmd.Flags().StringP("workspace-id", "w", "", "Set the workspace id for the project")
 }
 
 func writeConfigFile(wk string) error {
 	data := models.InitBody{
-		WorkSpaceKey: wk,
+		WorkSpaceId: wk,
 	}
 	d, err := json.Marshal(&data)
 	if err != nil {
