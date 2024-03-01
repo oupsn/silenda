@@ -18,14 +18,14 @@ func NewSecretService(secretRepository repositories.SecretRepository) SecretServ
 func (s secretService) FindSecretsByEnvMode(workspaceId string, envMode string) ([]domains.Secret, error) {
 	secrets, err := s.secretRepository.FindSecretsByEnvMode(workspaceId, envMode)
 	if err != nil {
-		return nil, err
+		return nil, ErrorSecretNotFound
 	}
 	return secrets, nil
 }
 
 func (s secretService) CreateSecret(secret domains.Secret) error {
 	if err := s.secretRepository.CreateSecret(secret); err != nil {
-		return err
+		return ErrorSecretExists
 	}
 	return nil
 }

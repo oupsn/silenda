@@ -17,6 +17,17 @@ func NewSecretHandler(secretService services.SecretService) SecretHandler {
 	}
 }
 
+// FindSecretsByEnvMode godoc
+// @tags secret
+// @id findSecretsByEnvMode
+// @summary Find secrets by env mode
+// @accept json
+// @produce json
+// @Param payload body FindSecretsByEnvModeBody true "FindSecretsByEnvModeBody"
+// @Success 200 {object} Response[[]FindSecretsByEnvModeResponse]
+// @Failure 400 {object} ErrResponse
+// @Failure 500 {object} ErrResponse
+// @Router /secret.findSecretsByEnvMode [post]
 func (s *SecretHandler) FindSecretsByEnvMode(c *fiber.Ctx) error {
 	var body FindSecretsByEnvModeBody
 	if err := c.BodyParser(&body); err != nil {
@@ -37,6 +48,17 @@ func (s *SecretHandler) FindSecretsByEnvMode(c *fiber.Ctx) error {
 	return Ok(c, response)
 }
 
+// CreateSecret godoc
+// @tags secret
+// @id createSecret
+// @summary Create secret
+// @accept json
+// @produce json
+// @Param payload body CreateSecretBody true "CreateSecretBody"
+// @Success 200 {object} Response[string]
+// @Failure 400 {object} ErrResponse
+// @Failure 500 {object} ErrResponse
+// @Router /secret.createSecret [post]
 func (s *SecretHandler) CreateSecret(c *fiber.Ctx) error {
 	var body CreateSecretBody
 	if err := c.BodyParser(&body); err != nil {
@@ -55,5 +77,5 @@ func (s *SecretHandler) CreateSecret(c *fiber.Ctx) error {
 	if err := s.secretService.CreateSecret(secret); err != nil {
 		return err
 	}
-	return Ok(c, "Create secret successfully!")
+	return Created(c, "Create secret successfully!")
 }

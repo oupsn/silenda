@@ -1,0 +1,132 @@
+definitions:
+  CreateSecretBody:
+    properties:
+      env_mode:
+        type: string
+      key:
+        type: string
+      value:
+        type: string
+      workspace_id:
+        type: string
+    type: object
+  FindSecretsByEnvModeBody:
+    properties:
+      env_mode:
+        type: string
+      workspace_id:
+        type: string
+    type: object
+  FindSecretsByEnvModeResponse:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+  handlers.ErrResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  handlers.Response-array_FindSecretsByEnvModeResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/FindSecretsByEnvModeResponse'
+        type: array
+      message:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  handlers.Response-string:
+    properties:
+      code:
+        type: integer
+      data:
+        type: string
+      message:
+        type: string
+      timestamp:
+        type: string
+    type: object
+info:
+  contact:
+    email: pasinun.w@gmail.com
+    name: Pasinun.w
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Silenda API
+  version: "1.0"
+paths:
+  /secret.createSecret:
+    post:
+      consumes:
+      - application/json
+      operationId: createSecret
+      parameters:
+      - description: CreateSecretBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/CreateSecretBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Create secret
+      tags:
+      - secret
+  /secret.findSecretsByEnvMode:
+    post:
+      consumes:
+      - application/json
+      operationId: findSecretsByEnvMode
+      parameters:
+      - description: FindSecretsByEnvModeBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/FindSecretsByEnvModeBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-array_FindSecretsByEnvModeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Find secrets by env mode
+      tags:
+      - secret
+schemes:
+- http
+swagger: "2.0"
