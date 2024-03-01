@@ -9,6 +9,6 @@ import (
 )
 
 func main() {
-	loaders.Configs()
+	loaders.WorkspaceConfigInit()
 	cmd.Execute()
 }

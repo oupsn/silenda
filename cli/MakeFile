@@ -1,0 +1,7 @@
+swag-client:
+	swagger generate client -f ../backend/doc/swagger.jspn -A api
+
+build:
+	go build -a -o silenda
+
+

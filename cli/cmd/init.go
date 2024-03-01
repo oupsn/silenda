@@ -25,11 +25,15 @@ var initCmd = &cobra.Command{
 			fmt.Println("Error: ", err)
 			return
 		}
+		if wk == "" {
+			fmt.Println("Error: ", "workspace id is required, HINT: try `silenda init --workspace-id <workspace-id>`")
+			return
+		}
+
 		_, err = os.ReadFile(utils.CONFIG_FILE_NAME)
 		if err == nil {
-			fmt.Println("Workspace id already exists")
 			prompt := promptui.Select{
-				Label: "Do you want to overwrite it?",
+				Label: "Workspace id already set. Do you want to overwrite it?",
 				Items: []string{"Yes", "No"},
 			}
 			_, result, err := prompt.Run()
@@ -38,17 +42,17 @@ var initCmd = &cobra.Command{
 				return
 			}
 			if result == "No" {
-				fmt.Println("Overwrite cancelled")
+				fmt.Println("Initialization canceled")
 				return
 			}
 			if result == "Yes" {
-				err := writeConfigFile(wk)
+				err := writeConfigFile(args[0])
 				if err != nil {
 					fmt.Println("Error: ", err)
 				}
 			}
 		} else {
-			err := writeConfigFile(wk)
+			err := writeConfigFile(args[0])
 			if err != nil {
 				fmt.Println("Error: ", err)
 			}
@@ -58,7 +62,7 @@ var initCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-	initCmd.Flags().StringP("workspace-id", "w", "", "Set the workspace id for the project")
+	initCmd.Flags().StringP("workspace-id", "w", "", "workspace id")
 }
 
 func writeConfigFile(wk string) error {
