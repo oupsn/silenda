@@ -20,12 +20,15 @@ func SetupRoutes() {
 
 	// Repositories
 	var secretRepository = repositories.NewSecretRepository(DB)
+	var workspaceRepository = repositories.NewWorkspaceRepository(DB)
 
 	// Services
 	var secretService = services.NewSecretService(secretRepository)
+	var workspaceService = services.NewWorkspaceService(workspaceRepository)
 
 	// Handlers
 	var secretHandlers = handlers.NewSecretHandler(secretService)
+	var workspaceHandlers = handlers.NewWorkspaceHandler(workspaceService)
 
 	// Fiber App
 	app := NewFiberApp()
@@ -46,6 +49,10 @@ func SetupRoutes() {
 
 	v1.Post("secret.findSecretsByEnvMode", secretHandlers.FindSecretsByEnvMode)
 	v1.Post("secret.createSecret", secretHandlers.CreateSecret)
+	v1.Post("secret.deleteSecretById", secretHandlers.DeleteSecretById)
+
+	v1.Post("workspace.createWorkspace", workspaceHandlers.CreateWorkspace)
+	v1.Post("workspace.findAllWorkspaces", workspaceHandlers.FindAllWorkspaces)
 
 	//app.Use("*", filesystem.New(filesystem.Config{
 	//	Root:         http.FS(f),

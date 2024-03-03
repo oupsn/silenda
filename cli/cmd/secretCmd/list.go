@@ -1,7 +1,7 @@
 /*
 Copyright © 2024 Pasinun.w
 */
-package cmd
+package secretCmd
 
 import (
 	"fmt"
@@ -9,7 +9,6 @@ import (
 	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
 	"github.com/wuhoops/silenda/cli/api"
-	"github.com/wuhoops/silenda/cli/client/secret"
 	"github.com/wuhoops/silenda/cli/loaders"
 	"github.com/wuhoops/silenda/cli/models"
 )
@@ -29,12 +28,11 @@ var listCmd = &cobra.Command{
 			fmt.Print("Error: ", "workspace id has not been set, HINT: try `silenda init <workspace-id>`")
 			return
 		}
-		body := secret.FindSecretsByEnvModeParams{
-			Payload: &models.FindSecretsByEnvModeBody{
-				EnvMode:     env,
-				WorkspaceID: loaders.Wc.WorkSpaceId,
-			},
+		body := models.FindSecretsByEnvModeBody{
+			EnvMode:     env,
+			WorkspaceID: loaders.Wc.WorkSpaceId,
 		}
+
 		resp, err := api.GetAllEncryptedSecretVariables(body)
 		if err != nil {
 			fmt.Println("Error: ", err)
@@ -55,6 +53,6 @@ var listCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(listCmd)
+	secretCmd.AddCommand(listCmd)
 	listCmd.Flags().StringP("env", "e", "", "environment mode")
 }

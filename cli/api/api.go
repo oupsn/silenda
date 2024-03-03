@@ -16,15 +16,12 @@ func init() {
 	client = client2.New(transport, strfmt.Default)
 }
 
-func GetAllEncryptedSecretVariables(body secret.FindSecretsByEnvModeParams) ([]models.FindSecretsByEnvModeResponse, error) {
-	if body.Payload.EnvMode == "" {
+func GetAllEncryptedSecretVariables(body models.FindSecretsByEnvModeBody) ([]models.FindSecretsByEnvModeResponse, error) {
+	if body.EnvMode == "" {
 		return nil, errors.New("environment mode is required")
 	}
 	resp, err := client.Secret.FindSecretsByEnvMode(&secret.FindSecretsByEnvModeParams{
-		Payload: &models.FindSecretsByEnvModeBody{
-			EnvMode:     body.Payload.EnvMode,
-			WorkspaceID: body.Payload.WorkspaceID,
-		},
+		Payload: &body,
 	})
 	if err != nil {
 		return nil, err
@@ -39,23 +36,31 @@ func GetAllEncryptedSecretVariables(body secret.FindSecretsByEnvModeParams) ([]m
 	return response, nil
 }
 
-func CreateSecret(body secret.CreateSecretParams) error {
-	if body.Payload.EnvMode == "" {
+func CreateSecret(body models.CreateSecretBody) error {
+	if body.EnvMode == "" {
 		return errors.New("environment mode is required")
 	}
-	if body.Payload.Key == "" {
+	if body.Key == "" {
 		return errors.New("key is required")
 	}
-	if body.Payload.Value == "" {
+	if body.Value == "" {
 		return errors.New("value is required")
 	}
 	_, err := client.Secret.CreateSecret(&secret.CreateSecretParams{
-		Payload: &models.CreateSecretBody{
-			EnvMode:     body.Payload.EnvMode,
-			WorkspaceID: body.Payload.WorkspaceID,
-			Key:         body.Payload.Key,
-			Value:       body.Payload.Value,
-		},
+		Payload: &body,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteSecret(body models.DeleteSecretByIDBody) error {
+	if body.SecretID == "" {
+		return errors.New("id is required")
+	}
+	_, err := client.Secret.DeleteSecretByID(&secret.DeleteSecretByIDParams{
+		Payload: &body,
 	})
 	if err != nil {
 		return err

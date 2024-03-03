@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/strfmt"
 
 	"github.com/wuhoops/silenda/cli/client/secret"
+	"github.com/wuhoops/silenda/cli/client/workspace"
 )
 
 // Default API HTTP client.
@@ -56,6 +57,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *API {
 	cli := new(API)
 	cli.Transport = transport
 	cli.Secret = secret.New(transport, formats)
+	cli.Workspace = workspace.New(transport, formats)
 	return cli
 }
 
@@ -102,6 +104,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type API struct {
 	Secret secret.ClientService
 
+	Workspace workspace.ClientService
+
 	Transport runtime.ClientTransport
 }
 
@@ -109,4 +113,5 @@ type API struct {
 func (c *API) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.Secret.SetTransport(transport)
+	c.Workspace.SetTransport(transport)
 }

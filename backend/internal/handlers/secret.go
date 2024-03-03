@@ -16,3 +16,7 @@ type CreateSecretBody struct {
 	Key         string `json:"key"`
 	Value       string `json:"value"`
 } // @name CreateSecretBody
+
+type DeleteSecretByIdBody struct {
+	SecretID string `json:"secret_id"`
+} // @name DeleteSecretByIdBody

@@ -61,7 +61,7 @@ var initCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(initCmd)
+	RootCmd.AddCommand(initCmd)
 	initCmd.Flags().StringP("workspace-id", "w", "", "workspace id")
 }
 

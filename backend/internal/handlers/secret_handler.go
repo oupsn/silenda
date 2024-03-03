@@ -33,7 +33,11 @@ func (s *SecretHandler) FindSecretsByEnvMode(c *fiber.Ctx) error {
 	if err := c.BodyParser(&body); err != nil {
 		return err
 	}
-	secrets, err := s.secretService.FindSecretsByEnvMode(body.WorkspaceID, body.EnvMode)
+	workspaceIdUuid, err := uuid.Parse(body.WorkspaceID)
+	if err != nil {
+		return err
+	}
+	secrets, err := s.secretService.FindSecretsByEnvMode(workspaceIdUuid, body.EnvMode)
 	if err != nil {
 		return err
 	}
@@ -64,12 +68,12 @@ func (s *SecretHandler) CreateSecret(c *fiber.Ctx) error {
 	if err := c.BodyParser(&body); err != nil {
 		return err
 	}
-	UuidWorkspaceId, err := uuid.Parse(body.WorkspaceID)
+	UuidWorkspaceIdUuid, err := uuid.Parse(body.WorkspaceID)
 	if err != nil {
 		return err
 	}
 	secret := domains.Secret{
-		WorkspaceID: &UuidWorkspaceId,
+		WorkspaceID: &UuidWorkspaceIdUuid,
 		EnvMode:     (*domains.EnvMode)(&body.EnvMode),
 		Key:         &body.Key,
 		Value:       &body.Value,
@@ -78,4 +82,31 @@ func (s *SecretHandler) CreateSecret(c *fiber.Ctx) error {
 		return err
 	}
 	return Created(c, "Create secret successfully!")
+}
+
+// DeleteSecretById godoc
+// @tags secret
+// @id deleteSecretById
+// @summary Delete secret by id
+// @accept json
+// @produce json
+// @Param payload body DeleteSecretByIdBody true "DeleteSecretByIdBody"
+// @Success 200 {object} Response[string]
+// @Failure 400 {object} ErrResponse
+// @Failure 500 {object} ErrResponse
+// @Router /secret.deleteSecretByID [post]
+func (s *SecretHandler) DeleteSecretById(c *fiber.Ctx) error {
+	var body DeleteSecretByIdBody
+	if err := c.BodyParser(&body); err != nil {
+		return err
+	}
+	secretIdUuid, err := uuid.Parse(body.SecretID)
+	if err != nil {
+		return err
+	}
+	err = s.secretService.DeleteSecretById(secretIdUuid)
+	if err != nil {
+		return err
+	}
+	return Ok(c, "delete secret successfully")
 }

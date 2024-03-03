@@ -10,6 +10,32 @@ definitions:
       workspace_id:
         type: string
     type: object
+  CreateWorkspaceBody:
+    properties:
+      name:
+        type: string
+      owner:
+        type: string
+    type: object
+  DeleteSecretByIdBody:
+    properties:
+      secret_id:
+        type: string
+    type: object
+  FindAllWorkspacesBody:
+    properties:
+      owner:
+        type: string
+    type: object
+  FindAllWorkspacesResponse:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      owner:
+        type: string
+    type: object
   FindSecretsByEnvModeBody:
     properties:
       env_mode:
@@ -28,6 +54,19 @@ definitions:
     properties:
       code:
         type: integer
+      message:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  handlers.Response-array_FindAllWorkspacesResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/FindAllWorkspacesResponse'
+        type: array
       message:
         type: string
       timestamp:
@@ -97,6 +136,36 @@ paths:
       summary: Create secret
       tags:
       - secret
+  /secret.deleteSecretByID:
+    post:
+      consumes:
+      - application/json
+      operationId: deleteSecretById
+      parameters:
+      - description: DeleteSecretByIdBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/DeleteSecretByIdBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Delete secret by id
+      tags:
+      - secret
   /secret.findSecretsByEnvMode:
     post:
       consumes:
@@ -127,6 +196,66 @@ paths:
       summary: Find secrets by env mode
       tags:
       - secret
+  /workspace.createWorkspace:
+    post:
+      consumes:
+      - application/json
+      operationId: createWorkspace
+      parameters:
+      - description: CreateWorkspaceBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/CreateWorkspaceBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Create a new workspace
+      tags:
+      - workspace
+  /workspace.findAllWorkspaces:
+    post:
+      consumes:
+      - application/json
+      operationId: findAllWorkspaces
+      parameters:
+      - description: FindAllWorkspacesBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/FindAllWorkspacesBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-array_FindAllWorkspacesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Find all workspaces
+      tags:
+      - workspace
 schemes:
 - http
 swagger: "2.0"

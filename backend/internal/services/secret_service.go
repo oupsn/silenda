@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/google/uuid"
 	"github.com/wuhoops/silenda/backend/internal/domains"
 	"github.com/wuhoops/silenda/backend/internal/repositories"
 )
@@ -15,7 +16,7 @@ func NewSecretService(secretRepository repositories.SecretRepository) SecretServ
 	}
 }
 
-func (s secretService) FindSecretsByEnvMode(workspaceId string, envMode string) ([]domains.Secret, error) {
+func (s secretService) FindSecretsByEnvMode(workspaceId uuid.UUID, envMode string) ([]domains.Secret, error) {
 	secrets, err := s.secretRepository.FindSecretsByEnvMode(workspaceId, envMode)
 	if err != nil {
 		return nil, ErrorSecretNotFound
@@ -26,6 +27,14 @@ func (s secretService) FindSecretsByEnvMode(workspaceId string, envMode string) 
 func (s secretService) CreateSecret(secret domains.Secret) error {
 	if err := s.secretRepository.CreateSecret(secret); err != nil {
 		return ErrorSecretExists
+	}
+	return nil
+}
+
+func (s secretService) DeleteSecretById(id uuid.UUID) error {
+	if err := s.secretRepository.DeleteSecretById(id); err !=
+		nil {
+		return ErrorSecretNotFound
 	}
 	return nil
 }

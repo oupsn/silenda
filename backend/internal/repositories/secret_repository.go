@@ -16,13 +16,9 @@ func NewSecretRepository(db *gorm.DB) SecretRepository {
 	}
 }
 
-func (s secretRepository) FindSecretsByEnvMode(workspaceId string, envMode string) ([]domains.Secret, error) {
+func (s secretRepository) FindSecretsByEnvMode(workspaceId uuid.UUID, envMode string) ([]domains.Secret, error) {
 	var secrets []domains.Secret
-	UuidWorkspaceId, err := uuid.Parse(workspaceId)
-	if err != nil {
-		return nil, err
-	}
-	if err := s.DB.Where("workspace_id = ?", UuidWorkspaceId).Where("env_mode = ?", envMode).Find(&secrets).Error; err != nil {
+	if err := s.DB.Where("workspace_id = ?", workspaceId).Where("env_mode = ?", envMode).Find(&secrets).Error; err != nil {
 		return nil, err
 	}
 	return secrets, nil
@@ -30,6 +26,13 @@ func (s secretRepository) FindSecretsByEnvMode(workspaceId string, envMode strin
 
 func (s secretRepository) CreateSecret(secret domains.Secret) error {
 	if err := s.DB.Create(&secret).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s secretRepository) DeleteSecretById(id uuid.UUID) error {
+	if err := s.DB.Where("id = ?", id).Delete(&domains.Secret{}).Error; err != nil {
 		return err
 	}
 	return nil
