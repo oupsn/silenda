@@ -45,6 +45,8 @@ definitions:
     type: object
   FindSecretsByEnvModeResponse:
     properties:
+      id:
+        type: string
       key:
         type: string
       value:

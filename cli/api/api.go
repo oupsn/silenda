@@ -29,6 +29,7 @@ func GetAllEncryptedSecretVariables(body models.FindSecretsByEnvModeBody) ([]mod
 	var response []models.FindSecretsByEnvModeResponse
 	for _, s := range resp.Payload.Data {
 		response = append(response, models.FindSecretsByEnvModeResponse{
+			ID:    s.ID,
 			Key:   s.Key,
 			Value: s.Value,
 		})

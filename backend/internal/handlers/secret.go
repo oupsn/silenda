@@ -6,6 +6,7 @@ type FindSecretsByEnvModeBody struct {
 } // @name FindSecretsByEnvModeBody
 
 type FindSecretsByEnvModeResponse struct {
+	ID    string `json:"id"`
 	Key   string `json:"key"`
 	Value string `json:"value"`
 } // @name FindSecretsByEnvModeResponse

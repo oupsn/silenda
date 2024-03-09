@@ -20,7 +20,7 @@ type Secret struct {
 	ID          *uuid.UUID `gorm:"primaryKey"`
 	WorkspaceID *uuid.UUID
 	EnvMode     *EnvMode
-	Key         *string `gorm:"unique"`
+	Key         *string
 	Value       *string
 	gorm.Model
 }

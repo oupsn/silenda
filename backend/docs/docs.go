@@ -326,6 +326,9 @@ const docTemplate = `{
         "FindSecretsByEnvModeResponse": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
                 "key": {
                     "type": "string"
                 },

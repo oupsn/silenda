@@ -44,6 +44,7 @@ func (s *SecretHandler) FindSecretsByEnvMode(c *fiber.Ctx) error {
 	var response []FindSecretsByEnvModeResponse
 	for _, secret := range secrets {
 		response = append(response, FindSecretsByEnvModeResponse{
+			ID:    (*secret.ID).String(),
 			Key:   *secret.Key,
 			Value: *secret.Value,
 		})
