@@ -6,6 +6,7 @@ package main
 import (
 	"github.com/wuhoops/silenda/cli/cmd"
 	_ "github.com/wuhoops/silenda/cli/cmd/secretCmd"
+	_ "github.com/wuhoops/silenda/cli/cmd/workspaceCmd"
 	"github.com/wuhoops/silenda/cli/loaders"
 )
 

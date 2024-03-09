@@ -1,17 +1,16 @@
 /*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+Copyright © 2024 Pasinun.w
 */
 package workspaceCmd
 
 import (
-	"github.com/wuhoops/silenda/cli/cmd"
-
+	"fmt"
 	"github.com/spf13/cobra"
 )
 
-// workspaceCmd represents the workspace command
-var workspaceCmd = &cobra.Command{
-	Use:   "workspace",
+// listCmd represents the list command
+var createCmd = &cobra.Command{
+	Use:   "create",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -19,8 +18,11 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("create")
+	},
 }
 
 func init() {
-	cmd.RootCmd.AddCommand(workspaceCmd)
+	workspaceCmd.AddCommand(createCmd)
 }

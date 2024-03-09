@@ -19,11 +19,11 @@ var listCmd = &cobra.Command{
 	Short: "list all secret variables from the workspace",
 	Long:  "List all secret variables from the workspace",
 	Run: func(cmd *cobra.Command, args []string) {
-		env := cmd.Flag("env").Value.String()
-		if env == "" {
-			fmt.Print("Error: ", "environment mode is required, HINT: try `silenda list --env <env-mode>`")
+		if len(args) == 0 {
+			fmt.Print("Error: ", "environment mode is required, HINT: try `silenda list <env-mode>`")
 			return
 		}
+		env := args[0]
 		if loaders.Wc.WorkSpaceId == "" {
 			fmt.Print("Error: ", "workspace id has not been set, HINT: try `silenda init <workspace-id>`")
 			return

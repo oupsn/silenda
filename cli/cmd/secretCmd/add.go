@@ -18,13 +18,13 @@ var addCmd = &cobra.Command{
 	Short: "add secret variable",
 	Long:  `Add secret variable to the workspace.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		env, _ := cmd.Flags().GetString("env")
-		key, _ := cmd.Flags().GetString("key")
-		value, _ := cmd.Flags().GetString("value")
-		if env == "" || key == "" || value == "" {
-			fmt.Print("Error: ", "environment mode is required, HINT: try `silenda add --env <env-mode> --key <key> --value <value>`")
+		if len(args) < 3 {
+			fmt.Print("Error: ", "required value not given, HINT: try `silenda add <env-mode> <key> <value>`")
 			return
 		}
+		env := args[0]
+		key := args[1]
+		value := args[2]
 		if loaders.Wc.WorkSpaceId == "" {
 			fmt.Print("Error: ", "workspace id has not been set, HINT: try `silenda init <workspace-id>` to set workspace id.")
 			return
@@ -47,7 +47,4 @@ var addCmd = &cobra.Command{
 
 func init() {
 	secretCmd.AddCommand(addCmd)
-	addCmd.Flags().StringP("env", "e", "", "environment mode")
-	addCmd.Flags().StringP("key", "k", "", "secret key")
-	addCmd.Flags().StringP("value", "v", "", "secret value")
 }

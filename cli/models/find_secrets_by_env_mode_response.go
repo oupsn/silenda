@@ -17,6 +17,9 @@ import (
 // swagger:model FindSecretsByEnvModeResponse
 type FindSecretsByEnvModeResponse struct {
 
+	// id
+	ID string `json:"id,omitempty"`
+
 	// key
 	Key string `json:"key,omitempty"`
 
