@@ -177,6 +177,7 @@ func (h *WorkspaceHandler) AddUserToWorkspace(c *fiber.Ctx) error {
 	payload := domains.Member{
 		WorkspaceID: workspaceUuid,
 		UserID:      userUuid,
+		Role:        domains.Role(body.Role),
 	}
 	if err := h.workspaceService.AddUserToWorkspace(payload); err != nil {
 		return err

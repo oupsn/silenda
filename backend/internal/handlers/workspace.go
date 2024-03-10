@@ -27,6 +27,7 @@ type DeleteWorkspaceBody struct {
 type AddUserToWorkspaceBody struct {
 	WorkspaceID string `json:"workspace_id"`
 	UserID      string `json:"user_id"`
+	Role        string `json:"role"`
 } // @name AddUserToWorkspaceBody
 
 type RemoveUserFromWorkspaceBody struct {

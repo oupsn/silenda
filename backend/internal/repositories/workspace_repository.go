@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/wuhoops/silenda/backend/internal/domains"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type workspaceRepository struct {
@@ -16,11 +17,11 @@ func NewWorkspaceRepository(db *gorm.DB) WorkspaceRepository {
 	}
 }
 
-func (r *workspaceRepository) CreateWorkspace(workspace domains.Workspace) error {
-	if err := r.DB.Create(&workspace).Error; err != nil {
-		return err
+func (r *workspaceRepository) CreateWorkspace(workspace domains.Workspace) (*domains.Workspace, error) {
+	if err := r.DB.Clauses(clause.Returning{}).Create(&workspace).Error; err != nil {
+		return nil, err
 	}
-	return nil
+	return &workspace, nil
 }
 
 func (r *workspaceRepository) FindWorkspaceById(id uuid.UUID) (*domains.Workspace, error) {
@@ -54,7 +55,7 @@ func (r *workspaceRepository) DeleteWorkspace(id uuid.UUID) error {
 }
 
 func (r *workspaceRepository) AddUserToWorkspace(member domains.Member) error {
-	if err := r.DB.Create(member).Error; err != nil {
+	if err := r.DB.Create(&member).Error; err != nil {
 		return err
 	}
 	return nil

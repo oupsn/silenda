@@ -17,8 +17,18 @@ func NewWorkspaceService(workspaceRepository repositories.WorkspaceRepository) W
 }
 
 func (s *workspaceService) CreateWorkspace(workspace domains.Workspace) error {
-	if err := s.workspaceRepository.CreateWorkspace(workspace); err != nil {
+	wp, err := s.workspaceRepository.CreateWorkspace(workspace)
+	if err != nil {
 		return ErrorWorkspaceCreate
+	}
+
+	member := domains.Member{
+		UserID:      wp.UserID,
+		WorkspaceID: wp.ID,
+		Role:        "owner",
+	}
+	if err := s.workspaceRepository.AddUserToWorkspace(member); err != nil {
+		return err
 	}
 	return nil
 }

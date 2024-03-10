@@ -6,7 +6,7 @@ import (
 )
 
 type WorkspaceRepository interface {
-	CreateWorkspace(workspace domains.Workspace) error
+	CreateWorkspace(workspace domains.Workspace) (*domains.Workspace, error)
 	FindWorkspaceById(id uuid.UUID) (*domains.Workspace, error)
 	FindAllWorkspaces(ownerId uuid.UUID) ([]domains.Workspace, error)
 	UpdateWorkspace(workspace domains.Workspace) error
