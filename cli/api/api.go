@@ -6,6 +6,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	client2 "github.com/wuhoops/silenda/cli/client"
 	"github.com/wuhoops/silenda/cli/client/secret"
+	"github.com/wuhoops/silenda/cli/client/workspace"
 	"github.com/wuhoops/silenda/cli/models"
 )
 
@@ -102,4 +103,36 @@ func GetAllSecretsByWorkspaceID(body models.FindAllSecretsByWorkspaceIDBody) (*m
 		})
 	}
 	return response, nil
+}
+
+func UpdateSecret(body models.UpdateSecretByIDBody) error {
+	if body.SecretID == "" {
+		return errors.New("id is required")
+	}
+	if body.Value == "" {
+		return errors.New("value is required")
+	}
+	_, err := client.Secret.UpdateSecret(&secret.UpdateSecretParams{
+		Payload: &body,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CreateWorkspace(body models.CreateWorkspaceBody) error {
+	if body.Name == "" {
+		return errors.New("name is required")
+	}
+	if body.Owner == "" {
+		return errors.New("owner is required")
+	}
+	_, err := client.Workspace.CreateWorkspace(&workspace.CreateWorkspaceParams{
+		Payload: &body,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
 }
