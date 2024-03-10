@@ -38,3 +38,26 @@ func (s secretService) DeleteSecretById(id uuid.UUID) error {
 	}
 	return nil
 }
+
+func (s secretService) FindAllSecretsByWorkspaceId(id uuid.UUID) ([]domains.Secret, []domains.Secret, []domains.Secret, error) {
+	devSecrets, err := s.secretRepository.FindSecretsByEnvMode(id, "dev")
+	if err != nil {
+		return nil, nil, nil, ErrorSecretNotFound
+	}
+	stageSecrets, err := s.secretRepository.FindSecretsByEnvMode(id, "stage")
+	if err != nil {
+		return nil, nil, nil, ErrorSecretNotFound
+	}
+	prodSecrets, err := s.secretRepository.FindSecretsByEnvMode(id, "prod")
+	if err != nil {
+		return nil, nil, nil, ErrorSecretNotFound
+	}
+	return devSecrets, stageSecrets, prodSecrets, nil
+}
+
+func (s secretService) UpdateSecret(secret domains.Secret) error {
+	if err := s.secretRepository.UpdateSecret(secret); err != nil {
+		return ErrorSecretNotFound
+	}
+	return nil
+}

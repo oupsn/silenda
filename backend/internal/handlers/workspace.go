@@ -14,3 +14,22 @@ type FindAllWorkspacesResponse struct {
 	Name  string `json:"name"`
 	Owner string `json:"owner"`
 } // @name FindAllWorkspacesResponse
+
+type UpdateWorkspaceBody struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+} // @name UpdateWorkspaceBody
+
+type DeleteWorkspaceBody struct {
+	ID string `json:"workspace_id"`
+} // @name DeleteWorkspaceBody
+
+type AddUserToWorkspaceBody struct {
+	WorkspaceID string `json:"workspace_id"`
+	UserID      string `json:"user_id"`
+} // @name AddUserToWorkspaceBody
+
+type RemoveUserFromWorkspaceBody struct {
+	WorkspaceID string `json:"workspace_id"`
+	UserID      string `json:"user_id"`
+} // @name RemoveUserFromWorkspaceBody

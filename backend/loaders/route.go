@@ -50,9 +50,14 @@ func SetupRoutes() {
 	v1.Post("secret.findSecretsByEnvMode", secretHandlers.FindSecretsByEnvMode)
 	v1.Post("secret.createSecret", secretHandlers.CreateSecret)
 	v1.Post("secret.deleteSecretById", secretHandlers.DeleteSecretById)
+	v1.Post("secret.updateSecret", secretHandlers.UpdateSecret)
 
 	v1.Post("workspace.createWorkspace", workspaceHandlers.CreateWorkspace)
 	v1.Post("workspace.findAllWorkspaces", workspaceHandlers.FindAllWorkspaces)
+	v1.Post("workspace.updateWorkspace", workspaceHandlers.UpdateWorkspace)
+	v1.Post("workspace.deleteWorkspace", workspaceHandlers.DeleteWorkspace)
+	v1.Post("workspace.addUserToWorkspace", workspaceHandlers.AddUserToWorkspace)
+	v1.Post("workspace.removeUserFromWorkspace", workspaceHandlers.RemoveUserFromWorkspace)
 
 	//app.Use("*", filesystem.New(filesystem.Config{
 	//	Root:         http.FS(f),

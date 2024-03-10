@@ -1,4 +1,11 @@
 definitions:
+  AddUserToWorkspaceBody:
+    properties:
+      user_id:
+        type: string
+      workspace_id:
+        type: string
+    type: object
   CreateSecretBody:
     properties:
       env_mode:
@@ -21,6 +28,31 @@ definitions:
     properties:
       secret_id:
         type: string
+    type: object
+  DeleteWorkspaceBody:
+    properties:
+      workspace_id:
+        type: string
+    type: object
+  FindAllSecretsByWorkspaceIdBody:
+    properties:
+      workspace_id:
+        type: string
+    type: object
+  FindAllSecretsByWorkspaceIdResponse:
+    properties:
+      dev:
+        items:
+          $ref: '#/definitions/FindSecretsByEnvModeResponse'
+        type: array
+      prod:
+        items:
+          $ref: '#/definitions/FindSecretsByEnvModeResponse'
+        type: array
+      stage:
+        items:
+          $ref: '#/definitions/FindSecretsByEnvModeResponse'
+        type: array
     type: object
   FindAllWorkspacesBody:
     properties:
@@ -50,6 +82,27 @@ definitions:
       key:
         type: string
       value:
+        type: string
+    type: object
+  RemoveUserFromWorkspaceBody:
+    properties:
+      user_id:
+        type: string
+      workspace_id:
+        type: string
+    type: object
+  UpdateSecretByIdBody:
+    properties:
+      secret_id:
+        type: string
+      value:
+        type: string
+    type: object
+  UpdateWorkspaceBody:
+    properties:
+      id:
+        type: string
+      name:
         type: string
     type: object
   handlers.ErrResponse:
@@ -168,6 +221,36 @@ paths:
       summary: Delete secret by id
       tags:
       - secret
+  /secret.findAllSecretsByWorkspaceId:
+    post:
+      consumes:
+      - application/json
+      operationId: findAllSecretsByWorkspaceId
+      parameters:
+      - description: FindAllSecretsByWorkspaceIdBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/FindAllSecretsByWorkspaceIdBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/FindAllSecretsByWorkspaceIdResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Find all secrets by workspace id
+      tags:
+      - secret
   /secret.findSecretsByEnvMode:
     post:
       consumes:
@@ -198,6 +281,66 @@ paths:
       summary: Find secrets by env mode
       tags:
       - secret
+  /secret.updateSecret:
+    post:
+      consumes:
+      - application/json
+      operationId: updateSecret
+      parameters:
+      - description: UpdateSecretByIdBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateSecretByIdBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Update secret
+      tags:
+      - secret
+  /workspace.addUserToWorkspace:
+    post:
+      consumes:
+      - application/json
+      operationId: addUserToWorkspace
+      parameters:
+      - description: AddUserToWorkspaceBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/AddUserToWorkspaceBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Add user to workspace
+      tags:
+      - workspace
   /workspace.createWorkspace:
     post:
       consumes:
@@ -228,6 +371,36 @@ paths:
       summary: Create a new workspace
       tags:
       - workspace
+  /workspace.deleteWorkspace/{id}:
+    delete:
+      consumes:
+      - application/json
+      operationId: deleteWorkspace
+      parameters:
+      - description: DeleteWorkspaceBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/DeleteWorkspaceBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Delete workspace
+      tags:
+      - workspace
   /workspace.findAllWorkspaces:
     post:
       consumes:
@@ -256,6 +429,66 @@ paths:
           schema:
             $ref: '#/definitions/handlers.ErrResponse'
       summary: Find all workspaces
+      tags:
+      - workspace
+  /workspace.removeUserFromWorkspace:
+    delete:
+      consumes:
+      - application/json
+      operationId: removeUserFromWorkspace
+      parameters:
+      - description: RemoveUserFromWorkspaceBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/RemoveUserFromWorkspaceBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Remove user from workspace
+      tags:
+      - workspace
+  /workspace.updateWorkspace:
+    post:
+      consumes:
+      - application/json
+      operationId: updateWorkspace
+      parameters:
+      - description: UpdateWorkspaceBody
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateWorkspaceBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.Response-string'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrResponse'
+      summary: Update workspace
       tags:
       - workspace
 schemes:

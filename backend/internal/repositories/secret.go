@@ -9,4 +9,5 @@ type SecretRepository interface {
 	FindSecretsByEnvMode(workspaceId uuid.UUID, envMode string) ([]domains.Secret, error)
 	CreateSecret(secret domains.Secret) error
 	DeleteSecretById(id uuid.UUID) error
+	UpdateSecret(secret domains.Secret) error
 }

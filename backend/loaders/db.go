@@ -33,7 +33,7 @@ func CheckAndConnectDatabase() {
 func CheckAutoMigrate() {
 	if Env.DBAutoMigrate {
 		fmt.Println(fmt.Sprintf("[DB] Automigrate enabled"))
-		err := DB.AutoMigrate(&domains.Secret{}, &domains.Workspace{})
+		err := DB.AutoMigrate(&domains.Secret{}, &domains.Workspace{}, &domains.User{}, &domains.Member{})
 		if err != nil {
 			panic(err)
 		}

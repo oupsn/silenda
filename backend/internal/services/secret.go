@@ -15,4 +15,6 @@ type SecretService interface {
 	FindSecretsByEnvMode(workspaceId uuid.UUID, envMode string) ([]domains.Secret, error)
 	CreateSecret(secret domains.Secret) error
 	DeleteSecretById(id uuid.UUID) error
+	FindAllSecretsByWorkspaceId(id uuid.UUID) ([]domains.Secret, []domains.Secret, []domains.Secret, error)
+	UpdateSecret(secret domains.Secret) error
 }

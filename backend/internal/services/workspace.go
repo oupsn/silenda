@@ -14,4 +14,8 @@ var (
 type WorkspaceService interface {
 	CreateWorkspace(workspace domains.Workspace) error
 	FindAllWorkspaces(id uuid.UUID) ([]domains.Workspace, error)
+	UpdateWorkspace(workspace domains.Workspace) error
+	DeleteWorkspace(id uuid.UUID) error
+	AddUserToWorkspace(member domains.Member) error
+	RemoveUserFromWorkspace(member domains.Member) error
 }

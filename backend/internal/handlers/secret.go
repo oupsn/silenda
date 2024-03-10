@@ -21,3 +21,18 @@ type CreateSecretBody struct {
 type DeleteSecretByIdBody struct {
 	SecretID string `json:"secret_id"`
 } // @name DeleteSecretByIdBody
+
+type FindAllSecretsByWorkspaceIdBody struct {
+	WorkspaceID string `json:"workspace_id"`
+} // @name FindAllSecretsByWorkspaceIdBody
+
+type FindAllSecretsByWorkspaceIdResponse struct {
+	Dev   []FindSecretsByEnvModeResponse `json:"dev"`
+	Stage []FindSecretsByEnvModeResponse `json:"stage"`
+	Prod  []FindSecretsByEnvModeResponse `json:"prod"`
+} // @name FindAllSecretsByWorkspaceIdResponse
+
+type UpdateSecretByIdBody struct {
+	SecretID string `json:"secret_id"`
+	Value    string `json:"value"`
+} // @name UpdateSecretByIdBody

@@ -114,6 +114,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/secret.findAllSecretsByWorkspaceId": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "secret"
+                ],
+                "summary": "Find all secrets by workspace id",
+                "operationId": "findAllSecretsByWorkspaceId",
+                "parameters": [
+                    {
+                        "description": "FindAllSecretsByWorkspaceIdBody",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/FindAllSecretsByWorkspaceIdBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/FindAllSecretsByWorkspaceIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/secret.findSecretsByEnvMode": {
             "post": {
                 "consumes": [
@@ -160,6 +206,98 @@ const docTemplate = `{
                 }
             }
         },
+        "/secret.updateSecret": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "secret"
+                ],
+                "summary": "Update secret",
+                "operationId": "updateSecret",
+                "parameters": [
+                    {
+                        "description": "UpdateSecretByIdBody",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateSecretByIdBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response-string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workspace.addUserToWorkspace": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "workspace"
+                ],
+                "summary": "Add user to workspace",
+                "operationId": "addUserToWorkspace",
+                "parameters": [
+                    {
+                        "description": "AddUserToWorkspaceBody",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddUserToWorkspaceBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response-string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/workspace.createWorkspace": {
             "post": {
                 "consumes": [
@@ -181,6 +319,52 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/CreateWorkspaceBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response-string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workspace.deleteWorkspace/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "workspace"
+                ],
+                "summary": "Delete workspace",
+                "operationId": "deleteWorkspace",
+                "parameters": [
+                    {
+                        "description": "DeleteWorkspaceBody",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteWorkspaceBody"
                         }
                     }
                 ],
@@ -251,9 +435,112 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/workspace.removeUserFromWorkspace": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "workspace"
+                ],
+                "summary": "Remove user from workspace",
+                "operationId": "removeUserFromWorkspace",
+                "parameters": [
+                    {
+                        "description": "RemoveUserFromWorkspaceBody",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RemoveUserFromWorkspaceBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response-string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/workspace.updateWorkspace": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "workspace"
+                ],
+                "summary": "Update workspace",
+                "operationId": "updateWorkspace",
+                "parameters": [
+                    {
+                        "description": "UpdateWorkspaceBody",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateWorkspaceBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response-string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "AddUserToWorkspaceBody": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "workspace_id": {
+                    "type": "string"
+                }
+            }
+        },
         "CreateSecretBody": {
             "type": "object",
             "properties": {
@@ -287,6 +574,45 @@ const docTemplate = `{
             "properties": {
                 "secret_id": {
                     "type": "string"
+                }
+            }
+        },
+        "DeleteWorkspaceBody": {
+            "type": "object",
+            "properties": {
+                "workspace_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "FindAllSecretsByWorkspaceIdBody": {
+            "type": "object",
+            "properties": {
+                "workspace_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "FindAllSecretsByWorkspaceIdResponse": {
+            "type": "object",
+            "properties": {
+                "dev": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FindSecretsByEnvModeResponse"
+                    }
+                },
+                "prod": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FindSecretsByEnvModeResponse"
+                    }
+                },
+                "stage": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FindSecretsByEnvModeResponse"
+                    }
                 }
             }
         },
@@ -333,6 +659,39 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "RemoveUserFromWorkspaceBody": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "workspace_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "UpdateSecretByIdBody": {
+            "type": "object",
+            "properties": {
+                "secret_id": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "UpdateWorkspaceBody": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }

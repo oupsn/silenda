@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/wuhoops/silenda/backend/internal/domains"
 	"gorm.io/gorm"
@@ -33,6 +34,14 @@ func (s secretRepository) CreateSecret(secret domains.Secret) error {
 
 func (s secretRepository) DeleteSecretById(id uuid.UUID) error {
 	if err := s.DB.Where("id = ?", id).Delete(&domains.Secret{}).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s secretRepository) UpdateSecret(secret domains.Secret) error {
+	if err := s.DB.Where("id = ?", secret.ID).Updates(secret).Error; err != nil {
+		fmt.Print(err)
 		return err
 	}
 	return nil
