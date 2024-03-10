@@ -124,7 +124,7 @@ func (h *WorkspaceHandler) UpdateWorkspace(c *fiber.Ctx) error {
 // @Success 200 {object} Response[string]
 // @Failure 400 {object} ErrResponse
 // @Failure 500 {object} ErrResponse
-// @Router /workspace.deleteWorkspace/{id} [delete]
+// @Router /workspace.deleteWorkspace/ [delete]
 func (h *WorkspaceHandler) DeleteWorkspace(c *fiber.Ctx) error {
 	var body DeleteWorkspaceBody
 	if err := c.BodyParser(&body); err != nil {

@@ -371,7 +371,7 @@ paths:
       summary: Create a new workspace
       tags:
       - workspace
-  /workspace.deleteWorkspace/{id}:
+  /workspace.deleteWorkspace/:
     delete:
       consumes:
       - application/json

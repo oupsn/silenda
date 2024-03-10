@@ -344,7 +344,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/workspace.deleteWorkspace/{id}": {
+        "/workspace.deleteWorkspace/": {
             "delete": {
                 "consumes": [
                     "application/json"
