@@ -68,3 +68,38 @@ func DeleteSecret(body models.DeleteSecretByIDBody) error {
 	}
 	return nil
 }
+
+func GetAllSecretsByWorkspaceID(body models.FindAllSecretsByWorkspaceIDBody) (*models.FindAllSecretsByWorkspaceIDResponse, error) {
+	if body.WorkspaceID == "" {
+		return nil, errors.New("workspace id is required")
+	}
+	resp, err := client.Secret.FindAllSecretsByWorkspaceID(&secret.FindAllSecretsByWorkspaceIDParams{
+		Payload: &body,
+	})
+	if err != nil {
+		return nil, err
+	}
+	var response *models.FindAllSecretsByWorkspaceIDResponse
+	for _, s := range resp.Payload.Dev {
+		response.Dev = append(response.Dev, &models.FindSecretsByEnvModeResponse{
+			ID:    s.ID,
+			Key:   s.Key,
+			Value: s.Value,
+		})
+	}
+	for _, s := range resp.Payload.Stage {
+		response.Stage = append(response.Stage, &models.FindSecretsByEnvModeResponse{
+			ID:    s.ID,
+			Key:   s.Key,
+			Value: s.Value,
+		})
+	}
+	for _, s := range resp.Payload.Prod {
+		response.Prod = append(response.Prod, &models.FindSecretsByEnvModeResponse{
+			ID:    s.ID,
+			Key:   s.Key,
+			Value: s.Value,
+		})
+	}
+	return response, nil
+}

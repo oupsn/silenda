@@ -34,7 +34,11 @@ type ClientService interface {
 
 	DeleteSecretByID(params *DeleteSecretByIDParams, opts ...ClientOption) (*DeleteSecretByIDOK, error)
 
+	FindAllSecretsByWorkspaceID(params *FindAllSecretsByWorkspaceIDParams, opts ...ClientOption) (*FindAllSecretsByWorkspaceIDOK, error)
+
 	FindSecretsByEnvMode(params *FindSecretsByEnvModeParams, opts ...ClientOption) (*FindSecretsByEnvModeOK, error)
+
+	UpdateSecret(params *UpdateSecretParams, opts ...ClientOption) (*UpdateSecretOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -116,6 +120,44 @@ func (a *Client) DeleteSecretByID(params *DeleteSecretByIDParams, opts ...Client
 }
 
 /*
+FindAllSecretsByWorkspaceID finds all secrets by workspace id
+*/
+func (a *Client) FindAllSecretsByWorkspaceID(params *FindAllSecretsByWorkspaceIDParams, opts ...ClientOption) (*FindAllSecretsByWorkspaceIDOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewFindAllSecretsByWorkspaceIDParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "findAllSecretsByWorkspaceId",
+		Method:             "POST",
+		PathPattern:        "/secret.findAllSecretsByWorkspaceId",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &FindAllSecretsByWorkspaceIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*FindAllSecretsByWorkspaceIDOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for findAllSecretsByWorkspaceId: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
 FindSecretsByEnvMode finds secrets by env mode
 */
 func (a *Client) FindSecretsByEnvMode(params *FindSecretsByEnvModeParams, opts ...ClientOption) (*FindSecretsByEnvModeOK, error) {
@@ -150,6 +192,44 @@ func (a *Client) FindSecretsByEnvMode(params *FindSecretsByEnvModeParams, opts .
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for findSecretsByEnvMode: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateSecret updates secret
+*/
+func (a *Client) UpdateSecret(params *UpdateSecretParams, opts ...ClientOption) (*UpdateSecretOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateSecretParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateSecret",
+		Method:             "POST",
+		PathPattern:        "/secret.updateSecret",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &UpdateSecretReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateSecretOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateSecret: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

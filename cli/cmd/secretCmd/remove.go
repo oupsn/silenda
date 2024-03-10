@@ -20,7 +20,7 @@ var removeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		prompt := promptui.Select{
 			Label: "Please select the environment",
-			Items: []string{"dev", "stg", "prod"},
+			Items: []string{"dev", "stage", "prod"},
 		}
 		_, env, err := prompt.Run()
 		body := models.FindSecretsByEnvModeBody{
