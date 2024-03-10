@@ -45,6 +45,15 @@ func (h *WorkspaceHandler) CreateWorkspace(c *fiber.Ctx) error {
 		return err
 	}
 
+	payload2 := domains.Member{
+		WorkspaceID: payload.ID,
+		UserID:      OwnerUuid,
+		Role:        domains.Role("owner"),
+	}
+	if err := h.workspaceService.AddUserToWorkspace(payload2); err != nil {
+		return err
+	}
+
 	return Ok(c, "Workspace created")
 }
 
