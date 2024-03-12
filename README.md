@@ -1,2 +1,3 @@
-Silenda | A secret management
+**Silenda | A secret management**
+
 Status: In progress...
